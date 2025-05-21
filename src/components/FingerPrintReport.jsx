@@ -1,14 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "../assets/logo3.jpg";
 import { useParams } from "react-router-dom";
 import GetOneReport from "../hook/get-one-report";
 import GetCommitteeMember from "../hook/get-committee-member";
+import ImagesHook from "../hook/images-hook";
+import ImageModal from "./ImageModal";
 
 const FingerPrintReport = () => {
   const { id } = useParams();
 
   const [singleReport, isLoading] = GetOneReport(id);
   const [committeeMember] = GetCommitteeMember(id);
+  const [imageOpen, setImageOpen] = useState(false);
+
+  const handleOpenImage = () => {
+    setImageOpen(true);
+  };
+  const handleCloseImage = () => {
+    setImageOpen(false);
+  };
 
   return (
     <div
@@ -74,7 +84,13 @@ const FingerPrintReport = () => {
             </div>
           ))}
         </div>
+         <div onClick={handleOpenImage} className="flex justify-end">
+        <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg transition-colors">
+          عرض الصور
+        </button>
       </div>
+      </div>
+      {imageOpen && <ImageModal id={id} onClose={handleCloseImage} />}
     </div>
   );
 };

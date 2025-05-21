@@ -7,6 +7,7 @@ const initialState = {
   error: null,
   singleReport: [],
   committeeMember: [],
+  image: [], 
 };
 
 // Get all reports
@@ -20,9 +21,16 @@ export const getOneReport = createAsyncThunk("reports/getOne", async (id) => {
   const { data } = await useGetData(`api/inspection-reports/${id}`);
   return data.data;
 });
+
 // Get CommitteeMember
 export const getCommitteeMember = createAsyncThunk("reports/committeeMember", async (id) => {
   const { data } = await useGetData(`api/committee-members/section/${id}/`);
+  return data.data;
+});
+
+// ✅ Get Images
+export const getImage = createAsyncThunk("reports/getImage", async (id) => {
+  const { data } = await useGetData(`api/upload-images/${id}`);
   return data.data;
 });
 
@@ -56,6 +64,7 @@ const ReportSlice = createSlice({
         state.isLoading = false;
         state.error = action.error.message;
       })
+
       // Get CommitteeMember
       .addCase(getCommitteeMember.pending, (state) => {
         state.isLoading = true;
@@ -65,6 +74,18 @@ const ReportSlice = createSlice({
         state.committeeMember = action.payload;
       })
       .addCase(getCommitteeMember.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message;
+      })
+
+      .addCase(getImage.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getImage.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.image = action.payload;
+      })
+      .addCase(getImage.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message;
       });

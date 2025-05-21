@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../../redux/authSlice";
 import { useNavigate } from "react-router-dom";
 import notify from "../useNotification";
+import { loginUser } from "../../Redux/authSlice";
 
 const LoginHook = () => {
   const navigate = useNavigate();
@@ -46,7 +46,6 @@ const LoginHook = () => {
   const res = useSelector((state) => state.auth);
   const { user } = useSelector((state) => state.auth);
 
-  console.log(res)
 
   useEffect(() => {
   if (!loading && loginClicked) {
