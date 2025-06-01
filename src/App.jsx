@@ -14,10 +14,8 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
 
-        <Route element={<PrivateRoute allowedRoles={["user"]} />}>
           <Route path="/allReports" element={<AllReport />} />
           <Route path="/form/:id" element={<FingerPrintReport />} />
-        </Route>
       </Routes>
     </BrowserRouter>
   );
